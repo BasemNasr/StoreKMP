@@ -26,7 +26,10 @@ import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import model.BirdImage
+import data.model.BirdImage
+import di.appModule
+import org.koin.compose.KoinApplication
+import presentation.screens.SplashScreen
 
 @Composable
 fun BirdAppTheme(
@@ -46,10 +49,21 @@ fun BirdAppTheme(
 
 @Composable
 fun App() {
-    BirdAppTheme {
-        val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
-        BirdsPage(birdsViewModel)
+
+    KoinApplication(application = {
+        modules(appModule)
+    }) {
+            BirdAppTheme {
+                val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
+//                BirdsPage(birdsViewModel)
+                SplashScreen()
+            }
     }
+
+//    BirdAppTheme {
+//        val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
+//        BirdsPage(birdsViewModel)
+//    }
 }
 
 @Composable

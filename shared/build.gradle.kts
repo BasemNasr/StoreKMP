@@ -32,6 +32,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
+
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation("media.kamel:kamel-image:0.6.0")
@@ -39,8 +40,13 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.1")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                implementation("io.ktor:ktor-client-json:2.1.3")
+                implementation("io.ktor:ktor-client-logging:2.3.1")
                 api("dev.icerock.moko:mvvm-core:0.16.1") // only ViewModel, EventsDispatcher, Dispatchers.UI
                 api("dev.icerock.moko:mvvm-compose:0.16.1") // api mvvm-core, getViewModel for Compose Multiplatfrom
+                api("io.insert-koin:koin-core:3.4.0")
+                api("io.insert-koin:koin-test:3.4.0")
+                implementation("io.insert-koin:koin-compose:1.0.4")
             }
         }
         val androidMain by getting {
@@ -49,6 +55,9 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
                 implementation("io.ktor:ktor-client-android:2.3.1")
+                implementation("io.insert-koin:koin-core:3.4.0")
+                implementation("io.insert-koin:koin-android:3.4.0")
+
             }
         }
         val iosX64Main by getting
@@ -87,3 +96,4 @@ android {
         jvmToolchain(11)
     }
 }
+
