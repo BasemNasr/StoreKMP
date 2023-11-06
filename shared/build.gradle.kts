@@ -47,6 +47,14 @@ kotlin {
                 api("io.insert-koin:koin-core:3.4.0")
                 api("io.insert-koin:koin-test:3.4.0")
                 implementation("io.insert-koin:koin-compose:1.0.4")
+
+                // Voyager
+                implementation("cafe.adriel.voyager:voyager-koin:1.0.0-rc06")
+                implementation("cafe.adriel.voyager:voyager-transitions:1.0.0-rc06")
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0-rc06")
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.0.0-rc06")
+
+
             }
         }
         val androidMain by getting {
@@ -57,7 +65,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-android:2.3.1")
                 implementation("io.insert-koin:koin-core:3.4.0")
                 implementation("io.insert-koin:koin-android:3.4.0")
-
+                implementation("androidx.compose.ui:ui-tooling-preview-android:1.5.4")
             }
         }
         val iosX64Main by getting

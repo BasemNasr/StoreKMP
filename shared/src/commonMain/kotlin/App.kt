@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.Navigator
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
@@ -56,7 +57,7 @@ fun App() {
             BirdAppTheme {
                 val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
 //                BirdsPage(birdsViewModel)
-                SplashScreen()
+                Navigator(SplashScreen())
             }
     }
 

@@ -17,6 +17,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.internal.PrepareOp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -24,9 +29,17 @@ import presentation.theme.DarkPurple
 import presentation.theme.Gold
 import presentation.theme.Purple200
 
+class SplashScreen:Screen{
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        SplashScreenContent(navigator)
+    }
+}
+
+
 @Composable
-fun SplashScreen(
-) {
+fun SplashScreenContent(navigator:Navigator?=null) {
     val scale = remember {
         Animatable(0f)
     }
@@ -40,7 +53,7 @@ fun SplashScreen(
         )
 
         //delay(10L)
-
+        navigator?.push(SplashScreen())
 //        navController?.navigate(AuthScreens.LoginScreen.route)
     })
     SplashAnimationWithContent()
