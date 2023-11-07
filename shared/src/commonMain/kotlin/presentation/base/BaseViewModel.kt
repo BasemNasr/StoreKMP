@@ -19,6 +19,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     abstract fun setStateEvent(state: AllStateEvent)
+    abstract fun setUiEvent(state: AllStateEvent)
     open class AllStateEvent {
     }
 

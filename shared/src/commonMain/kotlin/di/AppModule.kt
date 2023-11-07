@@ -17,7 +17,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
-import presentation.screens.auth.AuthViewModel
+import presentation.screens.auth.LoginViewModel
 
 
 val appModule = module {
@@ -25,7 +25,7 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImp(get()) }
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
-    viewModelDefinition { AuthViewModel(get(), get()) }
+    viewModelDefinition { LoginViewModel(get(), get()) }
 }
 //val activityModule = module {
 //    scope<MainActivity> {

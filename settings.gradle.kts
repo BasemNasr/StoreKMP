@@ -23,6 +23,7 @@ pluginManagement {
         id("com.android.library").version(agpVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
+        id("dev.icerock.moko").version("0.23.0")
     }
 }
 

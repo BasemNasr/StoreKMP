@@ -55,7 +55,7 @@ fun App() {
         modules(appModule)
     }) {
             BirdAppTheme {
-                val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
+                val loginViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
 //                BirdsPage(birdsViewModel)
                 Navigator(SplashScreen())
             }
@@ -124,3 +124,5 @@ fun BirdImageCell(image: BirdImage) {
 
 
 expect fun getPlatformName(): String
+
+

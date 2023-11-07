@@ -21,13 +21,19 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.internal.PrepareOp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.screens.auth.LoginScreen
+import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.DarkPurple
 import presentation.theme.Gold
+import presentation.theme.PrimaryColor
 import presentation.theme.Purple200
+import presentation.theme.SPLASH_ANIMATED_BG_COLOR
+import presentation.theme.gray2
 
 class SplashScreen:Screen{
     @Composable
@@ -52,9 +58,8 @@ fun SplashScreenContent(navigator:Navigator?=null) {
             )
         )
 
-        //delay(10L)
-        navigator?.push(SplashScreen())
-//        navController?.navigate(AuthScreens.LoginScreen.route)
+        delay(10L)
+        navigator?.push(LoginScreen())
     })
     SplashAnimationWithContent()
 }
@@ -82,15 +87,14 @@ fun SplashAnimationWithContent() {
     Surface(Modifier.fillMaxSize()) {
         Canvas(modifier = Modifier
             .fillMaxSize()
-            .background(Purple200),
+            .background(SPLASH_ANIMATED_BG_COLOR),
             onDraw = {
                 withTransform({
                     // translate(angle1Y.value)
                     scale(scaleX = angle1Y.value, scaleY = angle2.value)
 
                 }) {
-                    drawCircle(color = DarkPurple, radius = 8f)
-
+                    drawCircle(color = BOLD_SILVER_BACKGROUND_COLOR, radius = 8f)
                 }
             }
         )
@@ -100,7 +104,7 @@ fun SplashAnimationWithContent() {
                 .padding(horizontal = 96.dp),
             contentScale = ContentScale.Fit,
             painter = logo,
-            colorFilter = ColorFilter.tint(Gold),
+            colorFilter = ColorFilter.tint(PrimaryColor),
             contentDescription = null
         )
     }

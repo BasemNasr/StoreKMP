@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="login">تسجيل الدخول</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="login_description">login by email and password</string>
+    <string name="have_not_account">Have not account ?</string>
+    <string name="regiser_new_account">Register New Account</string>
+
+</resources>

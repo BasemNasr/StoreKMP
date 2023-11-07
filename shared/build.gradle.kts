@@ -4,6 +4,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.8.21"
+    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
+
 }
 
 kotlin {
@@ -54,8 +56,11 @@ kotlin {
                 implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0-rc06")
                 implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.0.0-rc06")
 
+                implementation("dev.icerock.moko:resources:0.23.0")
+                implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
 
             }
+
         }
         val androidMain by getting {
             dependencies {
@@ -84,9 +89,14 @@ kotlin {
     }
 }
 
+multiplatformResources {
+    multiplatformResourcesPackage = "com.bn.store.kmp"
+}
+
+
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication.common"
+    namespace = "com.bn.store.kmp"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
