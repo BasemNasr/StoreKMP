@@ -4,11 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.bn.store.kmp.MR
 import data.model.LoginResponse
-import data.model.RegisterModel
 import data.model.RegisterResponse
 import data.network.Resource
 import dev.icerock.moko.resources.StringResource
-import dev.icerock.moko.resources.compose.stringResource
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import presentation.base.BaseViewModel
 import presentation.base.BaseViewModel.AllStateEvent
-import utils.CommonUtil
 
 
 class LoginViewModel(
@@ -25,24 +22,24 @@ class LoginViewModel(
     private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel() {
 
-    private val _emailError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
-    val emailError = _emailError.asStateFlow()
+    private val _userNameError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
+    val nameError = _userNameError.asStateFlow()
 
     private val _passwordError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
     val passwordError = _passwordError.asStateFlow()
 
-    private val _emailState = mutableStateOf(
+    private val _userNameState = mutableStateOf(
         TextFieldState(
-            text = "basem@gmail.com",
-            hint = "Enter your email",
+            text = "johnd",
+            hint = "Enter your User Name",
             isHintVisible = false,
         )
     )
-    val email: State<TextFieldState> = _emailState
+    val userName: State<TextFieldState> = _userNameState
 
     private val _passwordState = mutableStateOf(
         TextFieldState(
-            text = "Basem123456",
+            text = "m38rmF$",
             hint = "Enter your password",
             isHintVisible = false,
         )
@@ -62,12 +59,10 @@ class LoginViewModel(
         when (state) {
             is LoginStateIntent.Login -> {
                 viewModelScope.launch {
-                    _login.value = Resource.Loading
-                    _login.value = loginUseCase.invoke(email.value.text, password.value.text)
-//                    if(_passwordError.value !=null && _emailError.value!=null){
-//                        _login.value = Resource.Loading
-//                        _login.value = loginUseCase.invoke(email.value.text, password.value.text)
-//                    }
+                    if(userName.value.text.length>=5 && password.value.text.length>=6){
+                        _login.value = Resource.Loading
+                        _login.value = loginUseCase.invoke(userName.value.text, password.value.text)
+                    }
                 }
             }
 
@@ -83,15 +78,15 @@ class LoginViewModel(
 
     override fun setUiEvent(state: AllStateEvent) {
         when(state){
-            is LoginUIStateEvent.EnteredEmail->{
+            is LoginUIStateEvent.EnteredUserName->{
                 viewModelScope.launch {
-                    _emailState.value = email.value.copy(
+                    _userNameState.value = userName.value.copy(
                         text = state.value
                     )
-                    if(email.value.text.isEmpty()){
-                        _emailError.emit(MR.strings.email_validation)
+                    if(userName.value.text.isEmpty()){
+                        _userNameError.emit(MR.strings.user_name_validation)
                     }else{
-                        _emailError.emit(null)
+                        _userNameError.emit(null)
                     }
                 }
             }
@@ -100,7 +95,7 @@ class LoginViewModel(
                     _passwordState.value = password.value.copy(
                         text = state.value
                     )
-                    if(password.value.text.length<10){
+                    if(password.value.text.length<6){
                         _passwordError.emit(MR.strings.password_validation)
                     }else{
                         _passwordError.emit(null)
@@ -124,7 +119,7 @@ sealed class LoginStateIntent : AllStateEvent() {
 //    data class Register(val registerModel: RegisterModel) : AuthStateIntent()
 }
 sealed class LoginUIStateEvent : AllStateEvent() {
-    data class EnteredEmail(val value: String) : LoginUIStateEvent()
+    data class EnteredUserName(val value: String) : LoginUIStateEvent()
     data class EnteredPassword(val value: String) : LoginUIStateEvent()
 }
 

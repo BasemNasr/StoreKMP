@@ -3,13 +3,15 @@
     <string name="phone_number">Phone Number</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="username">User Name</string>
     <string name="login_description">login by email and password</string>
     <string name="have_not_account">Have not account ?</string>
     <string name="regiser_new_account">Register New Account</string>
 
 
-    <string name="password_validation">password must be upper than 10 char</string>
+    <string name="password_validation">password must be upper than 6 char</string>
     <string name="email_validation">please enter valid email to login</string>
+    <string name="user_name_validation">please enter valid user name</string>
 
 
 </resources>

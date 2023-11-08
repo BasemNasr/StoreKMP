@@ -1,9 +1,8 @@
 package data.model
 
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class LoginResponse(
     val token: String
-){
-
-}
+)

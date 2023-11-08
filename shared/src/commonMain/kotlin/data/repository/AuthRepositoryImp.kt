@@ -22,7 +22,7 @@ class AuthRepositoryImp(private val httpClient: HttpClient) : AuthRepository {
         val response = httpClient.post(Urls.LOGIN) {
             setBody(LoginRequest(userName,password))
         }.body<String>()
-        val isFailed = response.startsWith("{")
+        val isFailed = !response.startsWith("{")
         return if(!isFailed){
             try {
                 Resource.Success(

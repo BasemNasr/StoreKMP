@@ -21,10 +21,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,15 +41,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.bn.store.kmp.MR
 import dev.icerock.moko.resources.compose.*
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import presentation.components.AppPrimaryButton
 import presentation.components.AppTextField
+import presentation.screens.main.MainScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.DarkPurple
 import presentation.theme.Typography
@@ -59,17 +66,19 @@ class LoginScreen(
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
-        loginContent()
+        val navigator = LocalNavigator.currentOrThrow
+        loginContent(navigator)
     }
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     private fun loginContent(
+        navigator: Navigator?=null,
         viewModel: LoginViewModel = koinInject()
     ) {
 
 
-        val emailState = viewModel?.email?.value
+        val nameState = viewModel?.userName?.value
         val passwordState = viewModel?.password?.value
 
         val loginState = viewModel?.login?.collectAsState()
@@ -99,7 +108,7 @@ class LoginScreen(
                     contentDescription = null
                 )
 
-                BoxLoginDataInputs(emailState, passwordState,viewModel)
+                BoxLoginDataInputs(nameState, passwordState,viewModel)
 
                 Spacer(modifier = Modifier.height(40.dp))
 
@@ -164,13 +173,23 @@ class LoginScreen(
             }
         }
 
+        val snackState = remember { SnackbarHostState() }
+        val snackScope = rememberCoroutineScope()
+
+        SnackbarHost(hostState = snackState, Modifier)
+
+        fun launchSnackBar(message:String) {
+            snackScope.launch { snackState.showSnackbar("$message") }
+        }
+
+
 
         when(loginState?.value){
             is data.network.Resource.Success -> {
-
+                navigator?.push(MainScreen())
             }
             is data.network.Resource.Failure -> {
-
+                launchSnackBar("${(loginState?.value as data.network.Resource.Failure)?.exception?.message.toString()}")
             }
             data.network.Resource.Loading -> {
 
@@ -181,7 +200,7 @@ class LoginScreen(
 
     @Composable
     private fun BoxLoginDataInputs(
-        email: TextFieldState? = null,
+        userName: TextFieldState? = null,
         password: TextFieldState? = null,
         viewModel: LoginViewModel,
     ) {
@@ -208,17 +227,17 @@ class LoginScreen(
                     .height(55.dp)
                     .fillMaxWidth()
                     .background(Color.White),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                value = email?.text ?: "",
-                hintLabel = stringResource(MR.strings.email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                value = userName?.text ?: "",
+                hintLabel = stringResource(MR.strings.username),
                 onValueChanged = {
-                    viewModel.setUiEvent(LoginUIStateEvent.EnteredEmail(value = it))
+                    viewModel.setUiEvent(LoginUIStateEvent.EnteredUserName(value = it))
                 }
             )
 
-            viewModel.emailError.value?.let {
+            viewModel.nameError.value?.let {
                 Text(
-                    text = viewModel.emailError?.value?.let { stringResource(it) }?:"",
+                    text = viewModel.nameError?.value?.let { stringResource(it) }?:"",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
