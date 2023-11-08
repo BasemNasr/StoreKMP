@@ -73,15 +73,15 @@ class LoginScreen(
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     private fun loginContent(
-        navigator: Navigator?=null,
+        navigator: Navigator? = null,
         viewModel: LoginViewModel = koinInject()
     ) {
-
 
         val nameState = viewModel?.userName?.value
         val passwordState = viewModel?.password?.value
 
         val loginState = viewModel?.login?.collectAsState()
+
 
         Surface(
             modifier = Modifier
@@ -108,7 +108,7 @@ class LoginScreen(
                     contentDescription = null
                 )
 
-                BoxLoginDataInputs(nameState, passwordState,viewModel)
+                BoxLoginDataInputs(nameState, passwordState, viewModel)
 
                 Spacer(modifier = Modifier.height(40.dp))
 
@@ -178,22 +178,26 @@ class LoginScreen(
 
         SnackbarHost(hostState = snackState, Modifier)
 
-        fun launchSnackBar(message:String) {
+        fun launchSnackBar(message: String) {
             snackScope.launch { snackState.showSnackbar("$message") }
         }
 
 
 
-        when(loginState?.value){
+        when (loginState?.value) {
             is data.network.Resource.Success -> {
                 navigator?.push(MainScreen())
             }
+
             is data.network.Resource.Failure -> {
                 launchSnackBar("${(loginState?.value as data.network.Resource.Failure)?.exception?.message.toString()}")
+                viewModel.clearLoginState()
             }
+
             data.network.Resource.Loading -> {
 
             }
+
             null -> {}
         }
     }
@@ -237,7 +241,7 @@ class LoginScreen(
 
             viewModel.nameError.value?.let {
                 Text(
-                    text = viewModel.nameError?.value?.let { stringResource(it) }?:"",
+                    text = viewModel.nameError?.value?.let { stringResource(it) } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
@@ -259,7 +263,7 @@ class LoginScreen(
             }
             viewModel.passwordError.value?.let {
                 Text(
-                    text = viewModel.passwordError?.value?.let { stringResource(it) }?:"",
+                    text = viewModel.passwordError?.value?.let { stringResource(it) } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red

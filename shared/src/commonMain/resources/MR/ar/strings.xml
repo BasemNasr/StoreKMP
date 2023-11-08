@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="login">تسجيل الدخول</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="username">User Name</string>
-    <string name="login_description">login by email and password</string>
-    <string name="have_not_account">Have not account ?</string>
-    <string name="regiser_new_account">Register New Account</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="password">الرقم السري</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="login_description">سجل دخولك باسم المستخدم والرقم السري</string>
+    <string name="have_not_account">ليس لديك حساب؟</string>
+    <string name="regiser_new_account">سجل الآن</string>
+
+
+    <string name="password_validation">يجب أن تكون كلمة المرور أعلى من 6 أحرف</string>
+    <string name="email_validation">الرجاء إدخال بريد إلكتروني صالح لتسجيل الدخول</string>
+    <string name="user_name_validation">الرجاء إدخال اسم مستخدم صحيح</string>
+
 
 </resources>

@@ -53,13 +53,11 @@ class LoginViewModel(
     val register: StateFlow<Resource<RegisterResponse>?> = _register
 
 
-
-
     override fun setStateEvent(state: AllStateEvent) {
         when (state) {
             is LoginStateIntent.Login -> {
                 viewModelScope.launch {
-                    if(userName.value.text.length>=5 && password.value.text.length>=6){
+                    if (userName.value.text.length >= 5 && password.value.text.length >= 6) {
                         _login.value = Resource.Loading
                         _login.value = loginUseCase.invoke(userName.value.text, password.value.text)
                     }
@@ -77,32 +75,39 @@ class LoginViewModel(
     }
 
     override fun setUiEvent(state: AllStateEvent) {
-        when(state){
-            is LoginUIStateEvent.EnteredUserName->{
+        when (state) {
+            is LoginUIStateEvent.EnteredUserName -> {
+                _userNameState.value = userName.value.copy(
+                    text = state.value
+                )
                 viewModelScope.launch {
-                    _userNameState.value = userName.value.copy(
-                        text = state.value
-                    )
-                    if(userName.value.text.isEmpty()){
+                    if (userName.value.text.isEmpty()) {
                         _userNameError.emit(MR.strings.user_name_validation)
-                    }else{
+                    } else {
                         _userNameError.emit(null)
                     }
                 }
             }
-            is LoginUIStateEvent.EnteredPassword->{
+
+            is LoginUIStateEvent.EnteredPassword -> {
+                _passwordState.value = password.value.copy(
+                    text = state.value
+                )
                 viewModelScope.launch {
-                    _passwordState.value = password.value.copy(
-                        text = state.value
-                    )
-                    if(password.value.text.length<6){
+                    if (password.value.text.length < 6) {
                         _passwordError.emit(MR.strings.password_validation)
-                    }else{
+                    } else {
                         _passwordError.emit(null)
                     }
                 }
 
             }
+        }
+    }
+
+    fun clearLoginState(){
+        viewModelScope.launch {
+            _login.emit(null)
         }
     }
 }
@@ -118,6 +123,7 @@ sealed class LoginStateIntent : AllStateEvent() {
     object Login : LoginStateIntent()
 //    data class Register(val registerModel: RegisterModel) : AuthStateIntent()
 }
+
 sealed class LoginUIStateEvent : AllStateEvent() {
     data class EnteredUserName(val value: String) : LoginUIStateEvent()
     data class EnteredPassword(val value: String) : LoginUIStateEvent()
