@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.screens.auth.LoginScreen
+import presentation.screens.main.MainScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.DarkPurple
 import presentation.theme.Gold
