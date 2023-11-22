@@ -59,8 +59,9 @@ import presentation.theme.Typography
 import presentation.theme.gray2
 import presentation.theme.textColorSemiBlack
 import presentation.theme.yellow
+import utils.AppStrings
 
-object LoginScreen: Screen {
+object LoginScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -115,7 +116,7 @@ object LoginScreen: Screen {
                         .padding(horizontal = 40.dp, vertical = 12.dp)
                         .width(400.dp)
                         .height(90.dp),
-                    buttonText = "Login",
+                    buttonText = AppStrings.Login.stringValue,
                     isLoading = loginState?.value is data.network.Resource.Loading,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -130,7 +131,7 @@ object LoginScreen: Screen {
                         textAlign = TextAlign.Center
                     )
                 ) {
-                  viewModel.setStateEvent(LoginStateIntent.Login)
+                    viewModel.setStateEvent(LoginStateIntent.Login)
                 }
 
 
@@ -146,7 +147,7 @@ object LoginScreen: Screen {
                 ) {
 
                     Text(
-                        text = "have n't account?",
+                        text = AppStrings.DontHaveAccount.stringValue,
                         modifier = Modifier.padding(start = 2.dp, end = 2.dp, top = 2.dp),
                         style = TextStyle(fontSize = 14.sp),
                         color = gray2,
@@ -154,7 +155,7 @@ object LoginScreen: Screen {
                     )
 
                     Text(
-                        text = "Register new account",
+                        text = AppStrings.RegitserNewAccount.stringValue,
                         modifier = Modifier
                             .padding(start = 2.dp, end = 2.dp)
                             .clickable {
@@ -217,13 +218,13 @@ object LoginScreen: Screen {
         ) {
 
             Text(
-                text = stringResource(MR.strings.login),
+                text = AppStrings.Login.stringValue,
                 modifier = Modifier.padding(10.dp),
                 style = Typography.h5,
                 color = textColorSemiBlack
             )
-            Text(text = "login by email and password")
-/*
+            Text(text = AppStrings.LoginDescription.stringValue)
+
             AppTextField(
                 modifier = Modifier
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 10.dp)
@@ -232,44 +233,43 @@ object LoginScreen: Screen {
                     .background(Color.White),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 value = userName?.text ?: "",
-                hintLabel = "user name",
+                hintLabel = AppStrings.Username.stringValue,
                 onValueChanged = {
                     viewModel.setUiEvent(LoginUIStateEvent.EnteredUserName(value = it))
                 }
             )
 
-            /*viewModel.nameError.value?.let {
+            viewModel.nameError.value?.let {
                 Text(
-                    text = viewModel.nameError?.value?.let { stringResource(it) } ?: "",
+                    text = viewModel.nameError?.value?.let { it } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
                     )
                 )
-            }*/
-
+            }
             AppTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 24.dp, top = 20.dp, end = 24.dp)
-                    .clickable { }
-                    .testTag("PasswordTextField"),
+                    .clickable { },
                 value = password?.text ?: "",
                 visualTransformation = PasswordVisualTransformation(),
                 hintLabel = "Password",
             ) {
                 viewModel.setUiEvent(LoginUIStateEvent.EnteredPassword(value = it))
             }
-            /*viewModel.passwordError.value?.let {
+            viewModel.passwordError.value?.let {
                 Text(
-                    text = viewModel.passwordError?.value?.let { stringResource(it) } ?: "",
+                    text = viewModel.passwordError?.value?.let { it } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
                     )
                 )
-            }*/
-            Spacer(modifier = Modifier.height(40.dp))*/
+            }
+            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }
+

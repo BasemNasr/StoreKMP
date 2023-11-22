@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import presentation.base.BaseViewModel
 import presentation.base.BaseViewModel.AllStateEvent
+import utils.AppStrings
 
 
 class LoginViewModel(
@@ -22,10 +23,10 @@ class LoginViewModel(
     private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel() {
 
-    private val _userNameError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
+    private val _userNameError: MutableStateFlow<String?> = MutableStateFlow(null)
     val nameError = _userNameError.asStateFlow()
 
-    private val _passwordError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
+    private val _passwordError: MutableStateFlow<String?> = MutableStateFlow(null)
     val passwordError = _passwordError.asStateFlow()
 
     private val _userNameState = mutableStateOf(
@@ -82,7 +83,7 @@ class LoginViewModel(
                 )
                 viewModelScope.launch {
                     if (userName.value.text.isEmpty()) {
-                        _userNameError.emit(MR.strings.user_name_validation)
+                        _userNameError.emit(AppStrings.user_name_validation.stringValue)
                     } else {
                         _userNameError.emit(null)
                     }
@@ -95,7 +96,7 @@ class LoginViewModel(
                 )
                 viewModelScope.launch {
                     if (password.value.text.length < 6) {
-                        _passwordError.emit(MR.strings.password_validation)
+                        _passwordError.emit(AppStrings.PasswordValidation.stringValue)
                     } else {
                         _passwordError.emit(null)
                     }
@@ -105,7 +106,7 @@ class LoginViewModel(
         }
     }
 
-    fun clearLoginState(){
+    fun clearLoginState() {
         viewModelScope.launch {
             _login.emit(null)
         }
