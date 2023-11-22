@@ -60,10 +60,8 @@ import presentation.theme.gray2
 import presentation.theme.textColorSemiBlack
 import presentation.theme.yellow
 
-class LoginScreen(
-) : Screen {
+object LoginScreen: Screen {
 
-    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -117,7 +115,7 @@ class LoginScreen(
                         .padding(horizontal = 40.dp, vertical = 12.dp)
                         .width(400.dp)
                         .height(90.dp),
-                    buttonText = stringResource(MR.strings.login),
+                    buttonText = "Login",
                     isLoading = loginState?.value is data.network.Resource.Loading,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -132,7 +130,7 @@ class LoginScreen(
                         textAlign = TextAlign.Center
                     )
                 ) {
-                    viewModel.setStateEvent(LoginStateIntent.Login)
+                  viewModel.setStateEvent(LoginStateIntent.Login)
                 }
 
 
@@ -146,8 +144,9 @@ class LoginScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+
                     Text(
-                        text = stringResource(MR.strings.have_not_account),
+                        text = "have n't account?",
                         modifier = Modifier.padding(start = 2.dp, end = 2.dp, top = 2.dp),
                         style = TextStyle(fontSize = 14.sp),
                         color = gray2,
@@ -155,11 +154,11 @@ class LoginScreen(
                     )
 
                     Text(
-                        text = stringResource(MR.strings.regiser_new_account),
+                        text = "Register new account",
                         modifier = Modifier
                             .padding(start = 2.dp, end = 2.dp)
                             .clickable {
-//                                navController?.navigate(AppScreens.RegisterScreen.name)
+                                //navigator?.navigate(AppScreens.RegisterScreen.name)
                             },
                         style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold),
                         color = textColorSemiBlack,
@@ -223,8 +222,8 @@ class LoginScreen(
                 style = Typography.h5,
                 color = textColorSemiBlack
             )
-            Text(text = stringResource(MR.strings.login_description))
-
+            Text(text = "login by email and password")
+/*
             AppTextField(
                 modifier = Modifier
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 10.dp)
@@ -233,13 +232,13 @@ class LoginScreen(
                     .background(Color.White),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 value = userName?.text ?: "",
-                hintLabel = stringResource(MR.strings.username),
+                hintLabel = "user name",
                 onValueChanged = {
                     viewModel.setUiEvent(LoginUIStateEvent.EnteredUserName(value = it))
                 }
             )
 
-            viewModel.nameError.value?.let {
+            /*viewModel.nameError.value?.let {
                 Text(
                     text = viewModel.nameError?.value?.let { stringResource(it) } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
@@ -247,7 +246,7 @@ class LoginScreen(
                         color = Color.Red
                     )
                 )
-            }
+            }*/
 
             AppTextField(
                 modifier = Modifier
@@ -257,11 +256,11 @@ class LoginScreen(
                     .testTag("PasswordTextField"),
                 value = password?.text ?: "",
                 visualTransformation = PasswordVisualTransformation(),
-                hintLabel = stringResource(MR.strings.password),
+                hintLabel = "Password",
             ) {
                 viewModel.setUiEvent(LoginUIStateEvent.EnteredPassword(value = it))
             }
-            viewModel.passwordError.value?.let {
+            /*viewModel.passwordError.value?.let {
                 Text(
                     text = viewModel.passwordError?.value?.let { stringResource(it) } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
@@ -269,8 +268,8 @@ class LoginScreen(
                         color = Color.Red
                     )
                 )
-            }
-            Spacer(modifier = Modifier.height(40.dp))
+            }*/
+            Spacer(modifier = Modifier.height(40.dp))*/
         }
     }
 }

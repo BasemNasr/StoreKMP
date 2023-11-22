@@ -15,6 +15,20 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            isStatic = true
+            baseName = "shared"
+            export("dev.icerock.moko:resources:0.23.0")
+            export("dev.icerock.moko:resources-compose:0.23.0")
+
+        }
+    }
+
     cocoapods {
         version = "1.0.0"
         summary = "Some description for the Shared Module"
