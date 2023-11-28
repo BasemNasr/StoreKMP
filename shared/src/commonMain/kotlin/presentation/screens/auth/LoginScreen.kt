@@ -44,8 +44,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.bn.store.kmp.MR
-import dev.icerock.moko.resources.compose.*
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -109,7 +107,7 @@ object LoginScreen : Screen {
 
                 BoxLoginDataInputs(nameState, passwordState, viewModel)
 
-                Spacer(modifier = Modifier.height(40.dp))
+                //Spacer(modifier = Modifier.height(40.dp))
 
                 AppPrimaryButton(
                     modifier = Modifier
@@ -171,9 +169,8 @@ object LoginScreen : Screen {
                 }
 
             }
-        }
-
-        val snackState = remember { SnackbarHostState() }
+            }
+            val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
 
         SnackbarHost(hostState = snackState, Modifier)
@@ -200,6 +197,7 @@ object LoginScreen : Screen {
 
             null -> {}
         }
+
     }
 
     @Composable
@@ -248,6 +246,7 @@ object LoginScreen : Screen {
                     )
                 )
             }
+
             AppTextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -259,6 +258,7 @@ object LoginScreen : Screen {
             ) {
                 viewModel.setUiEvent(LoginUIStateEvent.EnteredPassword(value = it))
             }
+
             viewModel.passwordError.value?.let {
                 Text(
                     text = viewModel.passwordError?.value?.let { it } ?: "",

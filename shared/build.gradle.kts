@@ -23,8 +23,8 @@ kotlin {
         it.binaries.framework {
             isStatic = true
             baseName = "shared"
-            export("dev.icerock.moko:resources:0.23.0")
-            export("dev.icerock.moko:resources-compose:0.23.0")
+//            export("dev.icerock.moko:resources:0.23.0")
+//            export("dev.icerock.moko:resources-compose:0.23.0")
 
         }
     }
@@ -105,6 +105,7 @@ kotlin {
 
 multiplatformResources {
     multiplatformResourcesPackage = "com.bn.store.kmp"
+    disableStaticFrameworkWarning = true
 }
 
 

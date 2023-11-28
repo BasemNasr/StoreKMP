@@ -2,11 +2,9 @@ package presentation.screens.auth
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import com.bn.store.kmp.MR
 import data.model.LoginResponse
 import data.model.RegisterResponse
 import data.network.Resource
-import dev.icerock.moko.resources.StringResource
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
