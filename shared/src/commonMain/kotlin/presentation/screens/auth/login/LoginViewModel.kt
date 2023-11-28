@@ -1,9 +1,10 @@
-package presentation.screens.auth
+package presentation.screens.auth.login
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import data.model.LoginResponse
 import data.model.RegisterResponse
+import data.model.TextFieldState
 import data.network.Resource
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
@@ -18,7 +19,6 @@ import utils.AppStrings
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-    private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel() {
 
     private val _userNameError: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -29,8 +29,8 @@ class LoginViewModel(
 
     private val _userNameState = mutableStateOf(
         TextFieldState(
-            text = "johnd",
-            hint = "Enter your User Name",
+            text = "john@mail.com",
+            hint = "Enter your Email",
             isHintVisible = false,
         )
     )
@@ -38,7 +38,7 @@ class LoginViewModel(
 
     private val _passwordState = mutableStateOf(
         TextFieldState(
-            text = "m38rmF$",
+            text = "changeme",
             hint = "Enter your password",
             isHintVisible = false,
         )
@@ -62,13 +62,6 @@ class LoginViewModel(
                     }
                 }
             }
-
-//            is LoginStateIntent.Register -> {
-//                viewModelScope.launch {
-//                    _register.value = Resource.Loading
-//                    _register.value = registerUseCase.invoke(state.registerModel)
-//                }
-//            }
         }
 
     }
@@ -111,12 +104,6 @@ class LoginViewModel(
     }
 }
 
-
-data class TextFieldState(
-    val text: String = "",
-    val hint: String = "",
-    val isHintVisible: Boolean = true
-)
 
 sealed class LoginStateIntent : AllStateEvent() {
     object Login : LoginStateIntent()

@@ -1,4 +1,4 @@
-package presentation.screens.auth
+package presentation.screens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,12 +43,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import data.model.TextFieldState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import presentation.components.AppPrimaryButton
 import presentation.components.AppTextField
+import presentation.screens.auth.register.RegisterScreen
 import presentation.screens.main.MainScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.DarkPurple
@@ -157,7 +158,7 @@ object LoginScreen : Screen {
                         modifier = Modifier
                             .padding(start = 2.dp, end = 2.dp)
                             .clickable {
-                                //navigator?.navigate(AppScreens.RegisterScreen.name)
+                                navigator?.push(RegisterScreen)
                             },
                         style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold),
                         color = textColorSemiBlack,
@@ -229,9 +230,9 @@ object LoginScreen : Screen {
                     .height(55.dp)
                     .fillMaxWidth()
                     .background(Color.White),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 value = userName?.text ?: "",
-                hintLabel = AppStrings.Username.stringValue,
+                hintLabel = AppStrings.Email.stringValue,
                 onValueChanged = {
                     viewModel.setUiEvent(LoginUIStateEvent.EnteredUserName(value = it))
                 }

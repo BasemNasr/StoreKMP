@@ -25,8 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.screens.auth.LoginScreen
-import presentation.screens.main.MainScreen
+import presentation.screens.auth.login.LoginScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.PrimaryColor
 import presentation.theme.SPLASH_ANIMATED_BG_COLOR
