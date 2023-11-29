@@ -73,6 +73,10 @@ kotlin {
                 implementation("dev.icerock.moko:resources:0.23.0")
                 implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+
+                implementation("androidx.datastore:datastore-preferences-core:1.1.0-alpha03")
+
+
             }
 
         }
