@@ -1,5 +1,6 @@
 package di
 
+import core.platformModule
 import data.repository.AuthRepositoryImp
 import domain.repository.AuthRepository
 import domain.usecase.LoginUseCase
@@ -15,9 +16,19 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
-import org.koin.core.module.dsl.factoryOf
+import org.koin.core.context.startKoin
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import presentation.screens.auth.LoginViewModel
+import presentation.screens.auth.login.LoginViewModel
+import presentation.screens.auth.register.RegisterViewModel
+
+
+fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
+    appDeclaration()
+    modules(platformModule(), appModule)
+}
+
+fun initKoin() = initKoin {}
 
 
 val appModule = module {
@@ -25,7 +36,8 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImp(get()) }
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
-    viewModelDefinition { LoginViewModel(get(), get()) }
+    viewModelDefinition { LoginViewModel(get()) }
+    viewModelDefinition { RegisterViewModel(get()) }
 }
 //val activityModule = module {
 //    scope<MainActivity> {

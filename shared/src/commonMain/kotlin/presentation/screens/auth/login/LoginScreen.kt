@@ -1,4 +1,4 @@
-package presentation.screens.auth
+package presentation.screens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,14 +43,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.bn.store.kmp.MR
-import dev.icerock.moko.resources.compose.*
+import data.model.TextFieldState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import presentation.components.AppPrimaryButton
 import presentation.components.AppTextField
+import presentation.screens.auth.register.RegisterScreen
 import presentation.screens.main.MainScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.DarkPurple
@@ -59,11 +58,10 @@ import presentation.theme.Typography
 import presentation.theme.gray2
 import presentation.theme.textColorSemiBlack
 import presentation.theme.yellow
+import utils.AppStrings
 
-class LoginScreen(
-) : Screen {
+object LoginScreen : Screen {
 
-    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -110,14 +108,14 @@ class LoginScreen(
 
                 BoxLoginDataInputs(nameState, passwordState, viewModel)
 
-                Spacer(modifier = Modifier.height(40.dp))
+                //Spacer(modifier = Modifier.height(40.dp))
 
                 AppPrimaryButton(
                     modifier = Modifier
                         .padding(horizontal = 40.dp, vertical = 12.dp)
                         .width(400.dp)
                         .height(90.dp),
-                    buttonText = stringResource(MR.strings.login),
+                    buttonText = AppStrings.Login.stringValue,
                     isLoading = loginState?.value is data.network.Resource.Loading,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -146,8 +144,9 @@ class LoginScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+
                     Text(
-                        text = stringResource(MR.strings.have_not_account),
+                        text = AppStrings.DontHaveAccount.stringValue,
                         modifier = Modifier.padding(start = 2.dp, end = 2.dp, top = 2.dp),
                         style = TextStyle(fontSize = 14.sp),
                         color = gray2,
@@ -155,11 +154,11 @@ class LoginScreen(
                     )
 
                     Text(
-                        text = stringResource(MR.strings.regiser_new_account),
+                        text = AppStrings.RegitserNewAccount.stringValue,
                         modifier = Modifier
                             .padding(start = 2.dp, end = 2.dp)
                             .clickable {
-//                                navController?.navigate(AppScreens.RegisterScreen.name)
+                                navigator?.push(RegisterScreen)
                             },
                         style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold),
                         color = textColorSemiBlack,
@@ -171,9 +170,8 @@ class LoginScreen(
                 }
 
             }
-        }
-
-        val snackState = remember { SnackbarHostState() }
+            }
+            val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
 
         SnackbarHost(hostState = snackState, Modifier)
@@ -200,6 +198,7 @@ class LoginScreen(
 
             null -> {}
         }
+
     }
 
     @Composable
@@ -218,12 +217,12 @@ class LoginScreen(
         ) {
 
             Text(
-                text = stringResource(MR.strings.login),
+                text = AppStrings.Login.stringValue,
                 modifier = Modifier.padding(10.dp),
                 style = Typography.h5,
                 color = textColorSemiBlack
             )
-            Text(text = stringResource(MR.strings.login_description))
+            Text(text = AppStrings.LoginDescription.stringValue)
 
             AppTextField(
                 modifier = Modifier
@@ -231,9 +230,9 @@ class LoginScreen(
                     .height(55.dp)
                     .fillMaxWidth()
                     .background(Color.White),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 value = userName?.text ?: "",
-                hintLabel = stringResource(MR.strings.username),
+                hintLabel = AppStrings.Email.stringValue,
                 onValueChanged = {
                     viewModel.setUiEvent(LoginUIStateEvent.EnteredUserName(value = it))
                 }
@@ -241,7 +240,7 @@ class LoginScreen(
 
             viewModel.nameError.value?.let {
                 Text(
-                    text = viewModel.nameError?.value?.let { stringResource(it) } ?: "",
+                    text = viewModel.nameError?.value?.let { it } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
@@ -253,17 +252,17 @@ class LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 24.dp, top = 20.dp, end = 24.dp)
-                    .clickable { }
-                    .testTag("PasswordTextField"),
+                    .clickable { },
                 value = password?.text ?: "",
                 visualTransformation = PasswordVisualTransformation(),
-                hintLabel = stringResource(MR.strings.password),
+                hintLabel = "Password",
             ) {
                 viewModel.setUiEvent(LoginUIStateEvent.EnteredPassword(value = it))
             }
+
             viewModel.passwordError.value?.let {
                 Text(
-                    text = viewModel.passwordError?.value?.let { stringResource(it) } ?: "",
+                    text = viewModel.passwordError?.value?.let { it } ?: "",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     style = TextStyle(
                         color = Color.Red
@@ -274,3 +273,4 @@ class LoginScreen(
         }
     }
 }
+

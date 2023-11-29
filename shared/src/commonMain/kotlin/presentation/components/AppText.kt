@@ -26,12 +26,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import com.bn.store.kmp.MR
-import dev.icerock.moko.resources.compose.painterResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.theme.DarkPurple
 import presentation.theme.blackTextColor
 import presentation.theme.gray2
 import presentation.theme.grayTextColor
+import org.jetbrains.compose.resources.painterResource
 
 
 @Composable
@@ -120,6 +120,7 @@ fun AnnotatedClickableText(
 }
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AppTextField(
     modifier: Modifier,
@@ -166,9 +167,9 @@ fun AppTextField(
             modifier = modifier,
             trailingIcon = {
                 if (visualTransformation == PasswordVisualTransformation()) {
-                    val image = if (passwordVisible)
-                        MR.images.visibility
-                    else MR.images.visibility_off
+
+                    val image = if (passwordVisible) "visibility.xml" else "visibility_off.xml"
+
 
                     val description = if (passwordVisible) "Hide password" else "Show password"
 
@@ -194,6 +195,7 @@ fun AppTextField(
 }
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun AppTextField(
     modifier: Modifier,
@@ -243,9 +245,7 @@ fun AppTextField(
             modifier = modifier,
             trailingIcon = {
                 if (visualTransformation == PasswordVisualTransformation()) {
-                    val image = if (passwordVisible)
-                        MR.images.visibility
-                    else MR.images.visibility_off
+                    val image = if (passwordVisible) "visibility.xml" else "visibility_off.xml"
                     val description = if (passwordVisible) "Hide password" else "Show password"
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(painter = painterResource(image) , description)

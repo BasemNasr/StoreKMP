@@ -18,32 +18,32 @@ import kotlinx.serialization.encodeToString
 import utils.CommonUtil.jsonToObject
 
 class AuthRepositoryImp(private val httpClient: HttpClient) : AuthRepository {
-    override suspend fun login(userName: String, password: String): Resource<LoginResponse> {
+    override suspend fun login(email: String, password: String): Resource<LoginResponse> {
         val response = httpClient.post(Urls.LOGIN) {
-            setBody(LoginRequest(userName,password))
-        }.body<String>()
-        val isFailed = !response.startsWith("{")
+            setBody(LoginRequest(email,password))
+        }.body<LoginResponse>()
+        val isFailed = response.message != null
         return if(!isFailed){
             try {
                 Resource.Success(
-                    jsonToObject(response)
+                    response
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
                 Resource.Failure(e)
             }
         }else{
-            Resource.Failure(Exception(response))
+            Resource.Failure(Exception(response.message))
         }
 
     }
 
     override suspend fun register(registerModel: RegisterModel): Resource<RegisterResponse> {
-        val response = httpClient.get(Urls.LOGIN) {
-            parameter("username", "${registerModel.username}")
+        val response = httpClient.get(Urls.REGISTER) {
             parameter("email", "${registerModel.email}")
             parameter("password", "${registerModel.password}")
             parameter("name", "${registerModel.name}")
+            parameter("avatar", "${registerModel.avatar}")
         }.body<RegisterResponse>()
         return try {
             Resource.Success(

@@ -22,21 +22,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.internal.PrepareOp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import presentation.screens.auth.LoginScreen
-import presentation.screens.main.MainScreen
+import presentation.screens.auth.login.LoginScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
-import presentation.theme.DarkPurple
-import presentation.theme.Gold
 import presentation.theme.PrimaryColor
-import presentation.theme.Purple200
 import presentation.theme.SPLASH_ANIMATED_BG_COLOR
-import presentation.theme.gray2
 
-class SplashScreen:Screen{
+class SplashScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -46,7 +40,7 @@ class SplashScreen:Screen{
 
 
 @Composable
-fun SplashScreenContent(navigator:Navigator?=null) {
+fun SplashScreenContent(navigator: Navigator? = null) {
     val scale = remember {
         Animatable(0f)
     }
@@ -60,7 +54,7 @@ fun SplashScreenContent(navigator:Navigator?=null) {
         )
 
         delay(10L)
-        navigator?.push(LoginScreen())
+        navigator?.push(LoginScreen)
     })
     SplashAnimationWithContent()
 }

@@ -1,12 +1,11 @@
-package presentation.screens.auth
+package presentation.screens.auth.login
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import com.bn.store.kmp.MR
 import data.model.LoginResponse
 import data.model.RegisterResponse
+import data.model.TextFieldState
 import data.network.Resource
-import dev.icerock.moko.resources.StringResource
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,23 +14,23 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import presentation.base.BaseViewModel
 import presentation.base.BaseViewModel.AllStateEvent
+import utils.AppStrings
 
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-    private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel() {
 
-    private val _userNameError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
+    private val _userNameError: MutableStateFlow<String?> = MutableStateFlow(null)
     val nameError = _userNameError.asStateFlow()
 
-    private val _passwordError: MutableStateFlow<StringResource?> = MutableStateFlow(null)
+    private val _passwordError: MutableStateFlow<String?> = MutableStateFlow(null)
     val passwordError = _passwordError.asStateFlow()
 
     private val _userNameState = mutableStateOf(
         TextFieldState(
-            text = "johnd",
-            hint = "Enter your User Name",
+            text = "john@mail.com",
+            hint = "Enter your Email",
             isHintVisible = false,
         )
     )
@@ -39,7 +38,7 @@ class LoginViewModel(
 
     private val _passwordState = mutableStateOf(
         TextFieldState(
-            text = "m38rmF$",
+            text = "changeme",
             hint = "Enter your password",
             isHintVisible = false,
         )
@@ -63,13 +62,6 @@ class LoginViewModel(
                     }
                 }
             }
-
-//            is LoginStateIntent.Register -> {
-//                viewModelScope.launch {
-//                    _register.value = Resource.Loading
-//                    _register.value = registerUseCase.invoke(state.registerModel)
-//                }
-//            }
         }
 
     }
@@ -82,7 +74,7 @@ class LoginViewModel(
                 )
                 viewModelScope.launch {
                     if (userName.value.text.isEmpty()) {
-                        _userNameError.emit(MR.strings.user_name_validation)
+                        _userNameError.emit(AppStrings.user_name_validation.stringValue)
                     } else {
                         _userNameError.emit(null)
                     }
@@ -95,7 +87,7 @@ class LoginViewModel(
                 )
                 viewModelScope.launch {
                     if (password.value.text.length < 6) {
-                        _passwordError.emit(MR.strings.password_validation)
+                        _passwordError.emit(AppStrings.PasswordValidation.stringValue)
                     } else {
                         _passwordError.emit(null)
                     }
@@ -105,19 +97,13 @@ class LoginViewModel(
         }
     }
 
-    fun clearLoginState(){
+    fun clearLoginState() {
         viewModelScope.launch {
             _login.emit(null)
         }
     }
 }
 
-
-data class TextFieldState(
-    val text: String = "",
-    val hint: String = "",
-    val isHintVisible: Boolean = true
-)
 
 sealed class LoginStateIntent : AllStateEvent() {
     object Login : LoginStateIntent()
