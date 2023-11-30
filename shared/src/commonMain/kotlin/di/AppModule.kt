@@ -1,9 +1,7 @@
 package di
 
 import core.platformModule
-import data.core.AppDataStoreManager
 import data.repository.AuthRepositoryImp
-import domain.core.AppDataStore
 import domain.repository.AuthRepository
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
@@ -40,8 +38,6 @@ val appModule = module {
     single { RegisterUseCase(get()) }
     viewModelDefinition { LoginViewModel(get()) }
     viewModelDefinition { RegisterViewModel(get()) }
-
-    single<AppDataStore> { AppDataStoreManager(get()) }
 
 }
 //val activityModule = module {
