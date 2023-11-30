@@ -23,12 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
+import core.Context
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import data.model.BirdImage
 import di.appModule
+import di.getDatastoreModuleByPlatform
 import org.koin.compose.KoinApplication
 import presentation.screens.SplashScreen
 
@@ -50,76 +52,13 @@ fun BirdAppTheme(
 
 @Composable
 fun App() {
-
     KoinApplication(application = {
-        modules(appModule)
+        modules(getDatastoreModuleByPlatform(),appModule)
     }) {
             BirdAppTheme {
-                val loginViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
-//                BirdsPage(birdsViewModel)
                 Navigator(SplashScreen())
             }
     }
-
-//    BirdAppTheme {
-//        val birdsViewModel = getViewModel(Unit, viewModelFactory { BirdsViewModel() })
-//        BirdsPage(birdsViewModel)
-//    }
-}
-
-@Composable
-fun BirdsPage(viewModel: BirdsViewModel) {
-    val uiState by viewModel.uiState.collectAsState()
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Row(
-            Modifier.fillMaxWidth().padding(5.dp),
-            horizontalArrangement = Arrangement.spacedBy(5.dp)
-        ) {
-            for (category in uiState.categories) {
-                Button(
-                    onClick = {
-                        viewModel.selectCategory(category)
-                    },
-                    modifier = Modifier.aspectRatio(1.0f).fillMaxSize().weight(1.0f),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        focusedElevation = 0.dp
-                    )
-                )
-                {
-                    Text(category)
-                }
-            }
-        }
-        AnimatedVisibility(uiState.selectedImages.isNotEmpty()) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 5.dp),
-                content = {
-                    items(uiState.selectedImages) {
-                        BirdImageCell(it)
-                    }
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun BirdImageCell(image: BirdImage) {
-    KamelImage(
-        asyncPainterResource("https://sebastianaigner.github.io/demo-image-api/${image.path}"),
-        "${image.category} by ${image.author}",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxWidth().aspectRatio(1.0f)
-    )
 }
 
 

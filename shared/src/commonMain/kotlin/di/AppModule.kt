@@ -1,9 +1,7 @@
 package di
 
 import core.platformModule
-import data.core.AppDataStoreManager
 import data.repository.AuthRepositoryImp
-import domain.core.AppDataStore
 import domain.repository.AuthRepository
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
@@ -27,7 +25,7 @@ import presentation.screens.auth.register.RegisterViewModel
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
-    modules(platformModule(), appModule)
+    modules(platformModule(),getDatastoreModuleByPlatform() ,appModule)
 }
 
 fun initKoin() = initKoin {}
@@ -38,18 +36,10 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImp(get()) }
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
-    viewModelDefinition { LoginViewModel(get()) }
+    viewModelDefinition { LoginViewModel(get(),get()) }
     viewModelDefinition { RegisterViewModel(get()) }
 
-    single<AppDataStore> { AppDataStoreManager(get()) }
-
 }
-//val activityModule = module {
-//    scope<MainActivity> {
-//        scoped(qualifier = named("hello")) { "Heloo" }
-//        scoped(qualifier = named("bye")) { "Byeeeeee" }
-//    }
-//}
 
 
 private const val TIME_OUT = 60_000

@@ -6,8 +6,8 @@ import data.model.LoginResponse
 import data.model.RegisterResponse
 import data.model.TextFieldState
 import data.network.Resource
+import data.repository.AppPreferencesRepository
 import domain.usecase.LoginUseCase
-import domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +19,8 @@ import utils.AppStrings
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-) : BaseViewModel() {
+    private val appPreferencesRepository: AppPreferencesRepository,
+    ) : BaseViewModel() {
 
     private val _userNameError: MutableStateFlow<String?> = MutableStateFlow(null)
     val nameError = _userNameError.asStateFlow()
@@ -60,6 +61,11 @@ class LoginViewModel(
                         _login.value = Resource.Loading
                         _login.value = loginUseCase.invoke(userName.value.text, password.value.text)
                     }
+                }
+            }
+            is LoginStateIntent.SaveToken -> {
+                viewModelScope.launch {
+                    appPreferencesRepository.setUserToken(state.token)
                 }
             }
         }
@@ -107,6 +113,7 @@ class LoginViewModel(
 
 sealed class LoginStateIntent : AllStateEvent() {
     object Login : LoginStateIntent()
+    data class SaveToken(val token:String) : LoginStateIntent()
 //    data class Register(val registerModel: RegisterModel) : AuthStateIntent()
 }
 

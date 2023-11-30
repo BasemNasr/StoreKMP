@@ -43,7 +43,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import data.model.LoginResponse
 import data.model.TextFieldState
+import data.network.Resource
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -184,6 +186,7 @@ object LoginScreen : Screen {
 
         when (loginState?.value) {
             is data.network.Resource.Success -> {
+                viewModel.setStateEvent(LoginStateIntent.SaveToken((loginState?.value as Resource.Success<LoginResponse>)?.result?.access_token?:"null"))
                 navigator?.push(MainScreen())
             }
 

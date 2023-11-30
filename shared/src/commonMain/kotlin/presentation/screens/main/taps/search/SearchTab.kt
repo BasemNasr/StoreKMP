@@ -51,7 +51,7 @@ object SearchTab : Tab {
 
     @Composable
     override fun Content() {
-        LazyColumn {
+        /*LazyColumn {
             item {
                 TextField(
                     leadingIcon = {
@@ -113,7 +113,7 @@ object SearchTab : Tab {
                     }
                 }
             }
-        }
+        }*/
     }
 
 
