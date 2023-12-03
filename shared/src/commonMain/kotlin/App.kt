@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import core.Context
 import di.appModule
 import org.koin.compose.KoinApplication
-import presentation.screens.SplashScreen
+import presentation.screens.splash.SplashScreen
 
 @Composable
 fun StoreAppTheme(

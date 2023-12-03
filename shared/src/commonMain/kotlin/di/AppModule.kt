@@ -1,7 +1,5 @@
 package di
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import core.Context
 import core.platformModule
 import data.core.AppDataStoreManager
@@ -28,6 +26,7 @@ import org.koin.dsl.module
 import presentation.screens.auth.login.LoginViewModel
 import presentation.screens.auth.register.RegisterViewModel
 import presentation.screens.main.MainViewModel
+import presentation.screens.splash.SplashViewModel
 
 
 fun initKoin(context: Context,appDeclaration: KoinAppDeclaration = {}) = startKoin {
@@ -46,6 +45,7 @@ fun appModule(context: Context) = module {
     viewModelDefinition { LoginViewModel(get(),get()) }
     viewModelDefinition { RegisterViewModel(get()) }
     viewModelDefinition { MainViewModel(get()) }
+    viewModelDefinition { SplashViewModel(get()) }
     single<AppDataStore> { AppDataStoreManager(context) }
     single { AppPreferencesRepository(get()) }
 

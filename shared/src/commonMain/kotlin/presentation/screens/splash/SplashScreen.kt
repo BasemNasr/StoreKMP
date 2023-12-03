@@ -1,4 +1,4 @@
-package presentation.screens
+package presentation.screens.splash
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -25,7 +26,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import presentation.screens.auth.login.LoginScreen
+import presentation.screens.main.MainScreen
 import presentation.theme.BOLD_SILVER_BACKGROUND_COLOR
 import presentation.theme.PrimaryColor
 import presentation.theme.SPLASH_ANIMATED_BG_COLOR
@@ -40,7 +43,12 @@ class SplashScreen : Screen {
 
 
 @Composable
-fun SplashScreenContent(navigator: Navigator? = null) {
+fun SplashScreenContent(navigator: Navigator? = null,
+                         viewModel:SplashViewModel = koinInject()) {
+
+
+    val isLogin = viewModel?.isLogin?.collectAsState()
+
     val scale = remember {
         Animatable(0f)
     }
@@ -54,7 +62,15 @@ fun SplashScreenContent(navigator: Navigator? = null) {
         )
 
         delay(10L)
-        navigator?.push(LoginScreen)
+        when(isLogin?.value){
+            true->{
+                navigator?.push(MainScreen)
+            }
+            false->{
+                navigator?.push(LoginScreen)
+            }
+            else->{}
+        }
     })
     SplashAnimationWithContent()
 }
