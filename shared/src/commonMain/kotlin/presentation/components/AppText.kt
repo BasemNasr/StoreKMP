@@ -1,7 +1,12 @@
 package presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -15,9 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -25,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.theme.DarkPurple
@@ -120,80 +126,6 @@ fun AnnotatedClickableText(
 }
 
 
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun AppTextField(
-    modifier: Modifier,
-    value: String?,
-    hintLabel: String,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    hintColor: Color = grayTextColor,
-    showingIndicator: Boolean = true,
-    readOnly: Boolean = false,
-    enabled: Boolean = true,
-    error: String? = null,
-    interactionSource: MutableInteractionSource? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    onValueChanged: (text: String) -> Unit = {},
-) {
-    Column {
-        var passwordVisible by rememberSaveable { mutableStateOf(visualTransformation == PasswordVisualTransformation()) }
-
-        TextField(
-            readOnly = readOnly,
-            enabled = enabled,
-            value = value ?: "",
-            keyboardOptions = keyboardOptions,
-            visualTransformation = if (visualTransformation == PasswordVisualTransformation() && passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
-            onValueChange = {
-                onValueChanged.invoke(it)
-            },
-            interactionSource = interactionSource ?: MutableInteractionSource(),
-            label = { Text(hintLabel, color = hintColor) },
-            maxLines = 1,
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
-                focusedIndicatorColor = if (showingIndicator) blackTextColor else Color.Transparent,
-                unfocusedIndicatorColor = if (showingIndicator) grayTextColor else Color.Transparent,
-                disabledIndicatorColor = if (!enabled) grayTextColor else Color.Transparent,
-            ),
-            textStyle = TextStyle(
-                color = blackTextColor,
-                fontWeight = FontWeight.Bold,
-//                fontFamily = regularFont,
-                fontSize = 14.sp
-            ),
-            modifier = modifier,
-            trailingIcon = {
-                if (visualTransformation == PasswordVisualTransformation()) {
-
-                    val image = if (passwordVisible) "visibility.xml" else "visibility_off.xml"
-
-
-                    val description = if (passwordVisible) "Hide password" else "Show password"
-
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = painterResource(image) , description)
-                    }
-                } else if (trailingIcon != null) {
-                    trailingIcon()
-                }
-            }
-        )
-
-        if (error != null) {
-            Text(
-                text = error,
-                modifier = modifier,
-                color = MaterialTheme.colors.error
-            )
-        }
-    }
-
-
-}
-
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -248,7 +180,7 @@ fun AppTextField(
                     val image = if (passwordVisible) "visibility.xml" else "visibility_off.xml"
                     val description = if (passwordVisible) "Hide password" else "Show password"
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = painterResource(image) , description)
+                        Icon(painter = painterResource("flag.xml") , description)
                     }
                 } else if (trailingIconAction !== null) {
                     trailingIconAction()
