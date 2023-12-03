@@ -1,7 +1,13 @@
 package di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import core.Context
 import core.platformModule
+import data.core.AppDataStoreManager
+import data.repository.AppPreferencesRepository
 import data.repository.AuthRepositoryImp
+import domain.core.AppDataStore
 import domain.repository.AuthRepository
 import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
@@ -21,23 +27,27 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import presentation.screens.auth.login.LoginViewModel
 import presentation.screens.auth.register.RegisterViewModel
+import presentation.screens.main.MainViewModel
 
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
+fun initKoin(context: Context,appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
-    modules(platformModule(),getDatastoreModuleByPlatform() ,appModule)
+    modules(platformModule(),appModule(context))
 }
 
-fun initKoin() = initKoin {}
+fun initKoin(context: Context) = initKoin(context) {}
 
 
-val appModule = module {
+fun appModule(context: Context) = module {
     single { createKtorClient() }
     single<AuthRepository> { AuthRepositoryImp(get()) }
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
     viewModelDefinition { LoginViewModel(get(),get()) }
     viewModelDefinition { RegisterViewModel(get()) }
+    viewModelDefinition { MainViewModel(get()) }
+    single<AppDataStore> { AppDataStoreManager(context) }
+    single { AppPreferencesRepository(get()) }
 
 }
 

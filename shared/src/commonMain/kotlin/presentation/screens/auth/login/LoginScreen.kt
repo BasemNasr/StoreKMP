@@ -187,7 +187,7 @@ object LoginScreen : Screen {
         when (loginState?.value) {
             is data.network.Resource.Success -> {
                 viewModel.setStateEvent(LoginStateIntent.SaveToken((loginState?.value as Resource.Success<LoginResponse>)?.result?.access_token?:"null"))
-                navigator?.push(MainScreen())
+                navigator?.push(MainScreen)
             }
 
             is data.network.Resource.Failure -> {

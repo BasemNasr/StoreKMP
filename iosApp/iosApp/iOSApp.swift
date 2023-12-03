@@ -2,9 +2,9 @@ import SwiftUI
 import shared
 @main
 struct iOSApp: App {
-    init(){
-        AppModuleKt.doInitKoin()
-    }
+//     init(){
+//         AppModuleKt.doInitKoin()
+//     }
 	var body: some Scene {
 		WindowGroup {
 		    ZStack {

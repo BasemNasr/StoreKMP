@@ -7,6 +7,7 @@ import data.model.RegisterResponse
 import data.model.TextFieldState
 import data.network.Resource
 import data.repository.AppPreferencesRepository
+import domain.core.AppDataStore
 import domain.usecase.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,12 +15,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import presentation.base.BaseViewModel
 import presentation.base.BaseViewModel.AllStateEvent
+import presentation.base.DataStoreKeys
 import utils.AppStrings
 
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-    private val appPreferencesRepository: AppPreferencesRepository,
+    private val appDataStoreManager: AppDataStore,
     ) : BaseViewModel() {
 
     private val _userNameError: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -65,7 +67,7 @@ class LoginViewModel(
             }
             is LoginStateIntent.SaveToken -> {
                 viewModelScope.launch {
-                    appPreferencesRepository.setUserToken(state.token)
+                    appDataStoreManager.setValue(DataStoreKeys.TOKEN,state.token)
                 }
             }
         }
