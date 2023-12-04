@@ -43,6 +43,9 @@ kotlin {
     }
 
     sourceSets {
+
+        val voyagerVersion = "1.0.0-rc07"
+
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -65,10 +68,10 @@ kotlin {
                 implementation("io.insert-koin:koin-compose:1.0.4")
 
                 // Voyager
-                implementation("cafe.adriel.voyager:voyager-koin:1.0.0-rc06")
-                implementation("cafe.adriel.voyager:voyager-transitions:1.0.0-rc06")
-                implementation("cafe.adriel.voyager:voyager-tab-navigator:1.0.0-rc06")
-                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:1.0.0-rc06")
+//                implementation("cafe.adriel.voyager:voyager-koin:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
 
                 implementation("dev.icerock.moko:resources:0.23.0")
                 implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform

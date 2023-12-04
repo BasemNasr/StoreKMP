@@ -1,4 +1,4 @@
-package presentation.screens.main
+package presentation.screens.main.home
 
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,39 +18,22 @@ import org.koin.compose.koinInject
 import presentation.components.TabNavigationItem
 import presentation.screens.auth.login.LoginScreen
 import presentation.screens.auth.login.LoginViewModel
-import presentation.screens.main.home.CartTab
-import presentation.screens.main.home.HomeScreen
-import presentation.screens.main.home.HomeTab
 
-object MainScreen : Screen {
+object CartScreen : Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        MainScreen.mainContent(navigator)
+        CartScreen.mainContent(navigator)
     }
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     private fun mainContent(
         navigator: Navigator? = null,
-        viewModel: MainViewModel = koinInject()
     ) {
 
-        TabNavigator(
-            tab = HomeTab
-        ) {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                bottomBar = {
-                    BottomNavigation {
-                        TabNavigationItem(HomeTab)
-                        TabNavigationItem(CartTab)
-                    }
-                },
-                content = { CurrentTab() },
-            )
-        }
+       Text("Cart Screen")
         /*val userToken = viewModel?.userToken?.value
         viewModel.setStateEvent(MainStateIntent.GettingToken)
         Text("Hello Your Token is : $userToken")*/
