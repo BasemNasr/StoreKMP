@@ -4,7 +4,6 @@ package presentation.screens.main
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
@@ -16,11 +15,8 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.compose.koinInject
 import presentation.components.TabNavigationItem
-import presentation.screens.auth.login.LoginScreen
-import presentation.screens.auth.login.LoginViewModel
-import presentation.screens.main.home.CartTab
-import presentation.screens.main.home.HomeScreen
-import presentation.screens.main.home.HomeTab
+import presentation.screens.main.taps.category.CategoryTab
+import presentation.screens.main.taps.home.HomeTab
 
 object MainScreen : Screen {
 
@@ -45,7 +41,7 @@ object MainScreen : Screen {
                 bottomBar = {
                     BottomNavigation {
                         TabNavigationItem(HomeTab)
-                        TabNavigationItem(CartTab)
+                        TabNavigationItem(CategoryTab)
                     }
                 },
                 content = { CurrentTab() },

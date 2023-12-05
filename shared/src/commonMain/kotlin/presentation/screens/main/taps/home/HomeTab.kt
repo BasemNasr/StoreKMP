@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package presentation.screens.main.home
+package presentation.screens.main.taps.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.icons.Icons
