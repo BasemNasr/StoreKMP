@@ -3,13 +3,15 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
-    kotlin("plugin.serialization") version "1.8.21"
-    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
+//    kotlin("plugin.serialization") version "1.8.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0-Beta1"
+
+//    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
 
 }
 
 kotlin {
-    android()
+    androidTarget()
 
     iosX64()
     iosArm64()
@@ -29,6 +31,40 @@ kotlin {
         }
     }
 
+    //':shared:podDebugFrameworkIosFat' and [configuration ':shared:debugFrameworkIosFat']
+   val myAttribute = Attribute.of("myOwnAttribute", String::class.java)
+/*
+// replace releaseFrameworkIosFat by the name of the first configuration that conflicts
+    configurations.named(":podDebugFrameworkIosFat").configure {
+        attributes {
+            // put a unique attribute
+            attribute(myAttribute, "release-all")
+        }
+    }
+
+// replace debugFrameworkIosFat by the name of the second configuration that conflicts
+    configurations.named("podDebugFrameworkIosFat").configure {
+        attributes {
+            attribute(myAttribute, "debug-all")
+        }
+    }*/
+
+    configurations.all {
+        if (name == "podDebugFrameworkIosFat") {
+            attributes {
+                // put a unique attribute
+                attribute(myAttribute, "pod-debug")
+            }
+        }
+        if (name == "podReleaseFrameworkIosFat") {
+            attributes {
+                // put a unique attribute
+                attribute(myAttribute, "pod-release")
+            }
+        }
+    }
+
+
     cocoapods {
         version = "1.0.0"
         summary = "Some description for the Shared Module"
@@ -39,7 +75,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+//        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -73,8 +109,8 @@ kotlin {
                 implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
                 implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
 
-                implementation("dev.icerock.moko:resources:0.23.0")
-                implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+//                implementation("dev.icerock.moko:resources:0.23.0")
+//                implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
 //                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
 
                 implementation("androidx.datastore:datastore-preferences-core:1.1.0-alpha03")
@@ -111,13 +147,14 @@ kotlin {
             }
         }
     }
-}
+0
 
-multiplatformResources {
-    multiplatformResourcesPackage = "com.bn.store.kmp"
-    disableStaticFrameworkWarning = true
-}
 
+}
+//multiplatformResources {
+//    multiplatformResourcesPackage = "com.bn.store.kmp"
+//    disableStaticFrameworkWarning = true
+//}
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
@@ -129,14 +166,13 @@ android {
 
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
     }
 }
 
