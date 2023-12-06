@@ -17,6 +17,8 @@ import org.koin.compose.koinInject
 import presentation.components.TabNavigationItem
 import presentation.screens.main.taps.category.CategoryTab
 import presentation.screens.main.taps.home.HomeTab
+import presentation.screens.main.taps.profile.ProfileTab
+import presentation.screens.main.taps.search.SearchTab
 
 object MainScreen : Screen {
 
@@ -42,6 +44,8 @@ object MainScreen : Screen {
                     BottomNavigation {
                         TabNavigationItem(HomeTab)
                         TabNavigationItem(CategoryTab)
+                        TabNavigationItem(SearchTab)
+                        TabNavigationItem(ProfileTab)
                     }
                 },
                 content = { CurrentTab() },

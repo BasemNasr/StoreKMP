@@ -26,6 +26,7 @@ import org.koin.dsl.module
 import presentation.screens.auth.login.LoginViewModel
 import presentation.screens.auth.register.RegisterViewModel
 import presentation.screens.main.MainViewModel
+import presentation.screens.main.taps.profile.ProfileViewModel
 import presentation.screens.splash.SplashViewModel
 
 
@@ -46,6 +47,7 @@ fun appModule(context: Context) = module {
     viewModelDefinition { RegisterViewModel(get()) }
     viewModelDefinition { MainViewModel(get()) }
     viewModelDefinition { SplashViewModel(get()) }
+    viewModelDefinition { ProfileViewModel(get()) }
     single<AppDataStore> { AppDataStoreManager(context) }
     single { AppPreferencesRepository(get()) }
 

@@ -14,5 +14,9 @@ enum class AppStrings(val stringValue: String) {
     have_account("Have an Account?"),
     PasswordValidation("password must be upper than 6 char"),
     email_validation("please enter valid email to login"),
-    user_name_validation("please enter valid user name")
+    user_name_validation("please enter valid user name"),
+    yes("Yes"),
+    cancel("Cancel"),
+    log_out("Logout"),
+    are_you_sure_you_want_log_out("Are you sure you want log out?")
 }
