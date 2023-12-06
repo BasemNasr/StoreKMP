@@ -42,7 +42,7 @@ fun ProductCard(
     productModel: Product,
     onTap: () -> Unit,
 ) {
-   /* Card(
+    Card(
         onClick = {
             onTap()
         },
@@ -125,5 +125,5 @@ fun ProductCard(
             }
         }
 
-    }*/
+    }
 }

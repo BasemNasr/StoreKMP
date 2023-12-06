@@ -43,7 +43,7 @@ class HomeScreen : Screen {
     override fun Content() {
         val navigator: Navigator = LocalNavigator.currentOrThrow
 
-        /*LazyColumn(modifier = Modifier.padding(8.dp))
+        LazyColumn(modifier = Modifier.padding(8.dp))
         {
             item {
                 Row(
@@ -129,6 +129,6 @@ class HomeScreen : Screen {
                     }
                 }
             }
-        }*/
+        }
     }
 }
