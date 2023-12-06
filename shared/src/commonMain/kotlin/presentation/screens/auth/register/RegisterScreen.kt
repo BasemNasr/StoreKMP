@@ -186,7 +186,7 @@ object RegisterScreen : Screen {
 
         when (registerState?.value) {
             is data.network.Resource.Success -> {
-                navigator?.push(MainScreen)
+                navigator?.push(LoginScreen)
             }
 
             is data.network.Resource.Failure -> {

@@ -39,16 +39,17 @@ class AuthRepositoryImp(private val httpClient: HttpClient) : AuthRepository {
     }
 
     override suspend fun register(registerModel: RegisterModel): Resource<RegisterResponse> {
-        val response = httpClient.get(Urls.REGISTER) {
-            parameter("email", "${registerModel.email}")
-            parameter("password", "${registerModel.password}")
-            parameter("name", "${registerModel.name}")
-            parameter("avatar", "${registerModel.avatar}")
+        val response = httpClient.post(Urls.REGISTER) {
+            setBody(registerModel)
         }.body<RegisterResponse>()
         return try {
-            Resource.Success(
-                response
-            )
+            if(response.message.isNullOrEmpty()){
+                Resource.Success(
+                    response
+                )
+            }else{
+                Resource.Failure(Exception(response.message[0]))
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             Resource.Failure(e)

@@ -1,5 +1,8 @@
 package data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RegisterResponse(
     val avatar: String? = null,
     val creationAt: String? = null,
