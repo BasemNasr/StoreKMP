@@ -5,9 +5,13 @@ import core.platformModule
 import data.core.AppDataStoreManager
 import data.repository.AppPreferencesRepository
 import data.repository.AuthRepositoryImp
+import data.repository.HomeRepositoryImp
 import domain.core.AppDataStore
 import domain.repository.AuthRepository
+import domain.repository.HomeRepository
+import domain.usecase.CategoryUseCase
 import domain.usecase.LoginUseCase
+import domain.usecase.ProductUseCase
 import domain.usecase.RegisterUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
@@ -26,13 +30,14 @@ import org.koin.dsl.module
 import presentation.screens.auth.login.LoginViewModel
 import presentation.screens.auth.register.RegisterViewModel
 import presentation.screens.main.MainViewModel
+import presentation.screens.main.taps.home.HomeViewModel
 import presentation.screens.main.taps.profile.ProfileViewModel
 import presentation.screens.splash.SplashViewModel
 
 
-fun initKoin(context: Context,appDeclaration: KoinAppDeclaration = {}) = startKoin {
+fun initKoin(context: Context, appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
-    modules(platformModule(),appModule(context))
+    modules(platformModule(), appModule(context))
 }
 
 fun initKoin(context: Context) = initKoin(context) {}
@@ -41,13 +46,21 @@ fun initKoin(context: Context) = initKoin(context) {}
 fun appModule(context: Context) = module {
     single { createKtorClient() }
     single<AuthRepository> { AuthRepositoryImp(get()) }
+    single<HomeRepository> { HomeRepositoryImp(get()) }
+
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
-    viewModelDefinition { LoginViewModel(get(),get()) }
+    single { CategoryUseCase(get()) }
+    single { ProductUseCase(get()) }
+
+    viewModelDefinition { LoginViewModel(get(), get()) }
     viewModelDefinition { RegisterViewModel(get()) }
     viewModelDefinition { MainViewModel(get()) }
     viewModelDefinition { SplashViewModel(get()) }
     viewModelDefinition { ProfileViewModel(get()) }
+    viewModelDefinition { HomeViewModel(get(),get(),get()) }
+
+
     single<AppDataStore> { AppDataStoreManager(context) }
     single { AppPreferencesRepository(get()) }
 

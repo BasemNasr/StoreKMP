@@ -2,12 +2,10 @@ package presentation.screens.auth.register
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import data.model.LoginResponse
-import data.model.RegisterModel
-import data.model.RegisterResponse
+import data.model.request.RegisterModel
+import data.model.response.RegisterResponse
 import data.model.TextFieldState
 import data.network.Resource
-import domain.usecase.LoginUseCase
 import domain.usecase.RegisterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

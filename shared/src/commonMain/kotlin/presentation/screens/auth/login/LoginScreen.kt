@@ -43,8 +43,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import data.model.LoginResponse
 import data.model.TextFieldState
+import data.model.response.LoginResponse
 import data.network.Resource
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -77,10 +77,10 @@ object LoginScreen : Screen {
         viewModel: LoginViewModel = koinInject()
     ) {
 
-        val nameState = viewModel?.userName?.value
-        val passwordState = viewModel?.password?.value
+        val nameState = viewModel.userName.value
+        val passwordState = viewModel.password.value
 
-        val loginState = viewModel?.login?.collectAsState()
+        val loginState = viewModel.login.collectAsState()
 
 
         Surface(
@@ -172,8 +172,8 @@ object LoginScreen : Screen {
                 }
 
             }
-            }
-            val snackState = remember { SnackbarHostState() }
+        }
+        val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
 
         SnackbarHost(hostState = snackState, Modifier)
@@ -186,12 +186,17 @@ object LoginScreen : Screen {
 
         when (loginState?.value) {
             is data.network.Resource.Success -> {
-                viewModel.setStateEvent(LoginStateIntent.SaveToken((loginState?.value as Resource.Success<LoginResponse>)?.result?.access_token?:"null"))
+                viewModel.setStateEvent(
+                    LoginStateIntent.SaveToken(
+                        (loginState?.value as Resource.Success<LoginResponse>)?.result?.access_token
+                            ?: "null"
+                    )
+                )
                 navigator?.push(MainScreen)
             }
 
             is data.network.Resource.Failure -> {
-                launchSnackBar("${(loginState?.value as data.network.Resource.Failure)?.exception?.message.toString()}")
+                launchSnackBar((loginState.value as data.network.Resource.Failure).exception?.message.toString())
                 viewModel.clearLoginState()
             }
 

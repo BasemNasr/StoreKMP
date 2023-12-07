@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,16 +38,11 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import data.model.LoginResponse
-import data.network.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import presentation.components.CustomDialogSheet
 import presentation.components.ProfileSectionCard
-import presentation.screens.auth.login.LoginStateIntent
-import presentation.screens.main.MainScreen
 import presentation.theme.gray2
 import utils.AppStrings
 
@@ -75,7 +69,7 @@ object ProfileTab : Tab {
         val viewModel: ProfileViewModel = koinInject()
 
         var showLogOutSheet by remember { mutableStateOf(false) }
-        val logoutState = viewModel?.logout?.collectAsState()
+        val logoutState = viewModel.logout.collectAsState()
 
 
         Column(modifier = Modifier.padding(16.dp)) {

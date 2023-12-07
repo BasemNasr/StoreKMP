@@ -1,8 +1,8 @@
 package domain.repository
 
-import data.model.LoginResponse
-import data.model.RegisterModel
-import data.model.RegisterResponse
+import data.model.response.LoginResponse
+import data.model.request.RegisterModel
+import data.model.response.RegisterResponse
 import data.network.Resource
 
 interface AuthRepository {

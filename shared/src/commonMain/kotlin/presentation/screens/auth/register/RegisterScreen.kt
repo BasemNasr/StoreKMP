@@ -76,11 +76,11 @@ object RegisterScreen : Screen {
         viewModel: RegisterViewModel = koinInject()
     ) {
 
-        val nameState = viewModel?.userName?.value
-        val emailState = viewModel?.email?.value
-        val passwordState = viewModel?.password?.value
+        val nameState = viewModel.userName.value
+        val emailState = viewModel.email.value
+        val passwordState = viewModel.password.value
 
-        val registerState = viewModel?.register?.collectAsState()
+        val registerState = viewModel.register?.collectAsState()
 
 
         Surface(

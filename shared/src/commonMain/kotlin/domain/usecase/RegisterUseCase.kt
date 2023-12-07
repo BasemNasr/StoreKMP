@@ -1,6 +1,6 @@
 package domain.usecase
 
-import data.model.RegisterModel
+import data.model.request.RegisterModel
 import domain.repository.AuthRepository
 
 

@@ -1,7 +1,5 @@
 package presentation.screens.main.taps.profile
 
-import data.model.LoginResponse
-import data.network.Resource
 import domain.core.AppDataStore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

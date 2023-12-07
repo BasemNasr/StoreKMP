@@ -1,6 +1,5 @@
 package utils
 
-import data.model.LoginResponse
 import kotlinx.serialization.json.Json
 
 object CommonUtil {

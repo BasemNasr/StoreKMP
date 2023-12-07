@@ -1,4 +1,4 @@
-package data.model
+package data.model.response
 
 import kotlinx.serialization.Serializable
 
@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 data class LoginResponse(
     val access_token: String?=null,
     val refresh_token: String?=null,
-):BaseResponse()
+): BaseResponse()

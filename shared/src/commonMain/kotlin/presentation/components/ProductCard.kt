@@ -1,5 +1,6 @@
 package presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,9 +37,12 @@ import androidx.compose.ui.unit.sp
 import data.model.Product
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import presentation.theme.PrimaryColor
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalResourceApi::class)
 @Composable
 fun ProductCard(
     productModel: Product,
@@ -55,7 +61,24 @@ fun ProductCard(
                     asyncPainterResource(productModel.images[0]),
                     productModel.description,
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxWidth().height(200.dp)
+                    modifier = Modifier.fillMaxWidth().height(200.dp),
+                    onFailure = {
+                        KamelImage(
+                            asyncPainterResource(productModel.images[0]),
+                            productModel.description,
+                            contentScale = ContentScale.Fit,
+                            onLoading =  { progress -> CircularProgressIndicator(progress) },
+                            modifier = Modifier.fillMaxWidth().height(200.dp),
+                            onFailure = {
+                                Image(
+                                    modifier = Modifier,
+                                    contentScale = ContentScale.Fit,
+                                    painter = painterResource("not_found.png"),
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                    }
                 )
                 Box(modifier = Modifier.padding(8.dp)) {
                     Text(
@@ -95,7 +118,7 @@ fun ProductCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    productModel.category.name, style = TextStyle(
+                    productModel.category.name?:"", style = TextStyle(
                         fontSize = 11.sp,
                         fontWeight = FontWeight(400),
                         color = Color(0xFF9B9B9B),

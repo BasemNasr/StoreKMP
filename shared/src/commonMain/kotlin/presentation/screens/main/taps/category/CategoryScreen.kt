@@ -134,7 +134,7 @@ object CategoryScreen : Screen {
                                 )
                         ) {
                             Text(
-                                categories[it].name,
+                                categories[it].name?:"",
                                 modifier = Modifier.weight(1f).padding(start = 16.dp),
                                 style = TextStyle(
                                     fontSize = 18.sp,
@@ -144,7 +144,7 @@ object CategoryScreen : Screen {
                                 )
                             )
                             KamelImage(
-                                asyncPainterResource(categories[it].image),
+                                asyncPainterResource(categories[it].image?:""),
                                 categories[it].name,
                                 contentScale = ContentScale.FillWidth,
                                 modifier = Modifier.weight(1f)
