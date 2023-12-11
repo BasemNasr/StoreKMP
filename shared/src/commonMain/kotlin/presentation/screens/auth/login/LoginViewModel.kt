@@ -114,7 +114,7 @@ class LoginViewModel(
 
 sealed class LoginStateIntent : AllStateEvent() {
     object Login : LoginStateIntent()
-    data class SaveToken(val token:String) : LoginStateIntent()
+    data class SaveToken(val token: String) : LoginStateIntent()
 //    data class Register(val registerModel: RegisterModel) : AuthStateIntent()
 }
 

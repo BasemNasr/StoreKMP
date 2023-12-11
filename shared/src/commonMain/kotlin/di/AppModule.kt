@@ -10,6 +10,7 @@ import domain.core.AppDataStore
 import domain.repository.AuthRepository
 import domain.repository.HomeRepository
 import domain.usecase.CategoryUseCase
+import domain.usecase.GetProfileUseCase
 import domain.usecase.LoginUseCase
 import domain.usecase.ProductUseCase
 import domain.usecase.RegisterUseCase
@@ -29,9 +30,13 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import presentation.screens.auth.login.LoginViewModel
 import presentation.screens.auth.register.RegisterViewModel
+import presentation.screens.auth.updateProfile.UpdateProfileViewModel
+import presentation.screens.category.SelectedCategoryViewModel
 import presentation.screens.main.MainViewModel
+import presentation.screens.main.taps.category.CategoriesViewModel
 import presentation.screens.main.taps.home.HomeViewModel
 import presentation.screens.main.taps.profile.ProfileViewModel
+import presentation.screens.main.taps.search.SearchViewModel
 import presentation.screens.splash.SplashViewModel
 
 
@@ -45,19 +50,24 @@ fun initKoin(context: Context) = initKoin(context) {}
 
 fun appModule(context: Context) = module {
     single { createKtorClient() }
-    single<AuthRepository> { AuthRepositoryImp(get()) }
+    single<AuthRepository> { AuthRepositoryImp(get(),get()) }
     single<HomeRepository> { HomeRepositoryImp(get()) }
 
     single { LoginUseCase(get()) }
     single { RegisterUseCase(get()) }
     single { CategoryUseCase(get()) }
     single { ProductUseCase(get()) }
+    single { GetProfileUseCase(get()) }
 
     viewModelDefinition { LoginViewModel(get(), get()) }
     viewModelDefinition { RegisterViewModel(get()) }
     viewModelDefinition { MainViewModel(get()) }
     viewModelDefinition { SplashViewModel(get()) }
     viewModelDefinition { ProfileViewModel(get()) }
+    viewModelDefinition { CategoriesViewModel(get()) }
+    viewModelDefinition { SelectedCategoryViewModel(get()) }
+    viewModelDefinition { SearchViewModel(get()) }
+    viewModelDefinition { UpdateProfileViewModel(get(),get()) }
     viewModelDefinition { HomeViewModel(get(),get(),get()) }
 
 

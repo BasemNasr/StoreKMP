@@ -35,6 +35,7 @@ import presentation.components.AppSlider
 import presentation.components.CategoryCardTag
 import presentation.components.LoadingAnimation3
 import presentation.components.ProductCard
+import presentation.screens.product.ProductDetailsScreen
 
 class HomeScreen : Screen {
 
@@ -135,7 +136,7 @@ class HomeScreen : Screen {
                                     ProductCard(
                                         product
                                     ) {
-
+                                        navigator?.push(ProductDetailsScreen(product))
                                     }
                                 }
                             }

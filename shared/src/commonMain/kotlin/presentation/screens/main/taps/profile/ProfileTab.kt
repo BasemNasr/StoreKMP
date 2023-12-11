@@ -38,11 +38,14 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import cafe.adriel.voyager.transitions.SlideTransition
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.koin.compose.koinInject
 import presentation.components.CustomDialogSheet
 import presentation.components.ProfileSectionCard
+import presentation.screens.main.taps.search.SearchScreen
+import presentation.screens.settings.SettingsScreen
 import presentation.theme.gray2
 import utils.AppStrings
 
@@ -65,142 +68,8 @@ object ProfileTab : Tab {
 
     @Composable
     override fun Content() {
-        val navigator :Navigator = LocalNavigator.currentOrThrow
-        val viewModel: ProfileViewModel = koinInject()
-
-        var showLogOutSheet by remember { mutableStateOf(false) }
-        val logoutState = viewModel.logout.collectAsState()
-
-
-        Column(modifier = Modifier.padding(16.dp)) {
-
-            Text(
-                text = "Profile",
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight(700),
-                    color = Color.Black,
-
-                    ),
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Card(modifier = Modifier.size(80.dp), shape = CircleShape) {
-                    KamelImage(
-                        asyncPainterResource("https://i.ibb.co/cyP8x9m/my-passport-photo.jpg"),
-                        contentDescription = "profile_pic"
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                Column {
-                    Text(
-                        text = "Mohamed Sakr",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight(700),
-                            color = Color.Black,
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Text(
-                        text = "sagr3272@gmail.com",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight(600),
-                            color = gray2,
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-
-                }
-
-
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Icon(
-                    modifier = Modifier
-                        .clickable {
-                        }
-                        .size(24.dp),
-                    tint = Color.Black,
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = ""
-                )
-            }
-
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Column(
-                Modifier.verticalScroll(rememberScrollState())
-
-            ) {
-                ProfileSectionCard({ }, title = "My Orders") {
-                }
-
-                ProfileSectionCard({ }, title = "Cart") {
-
-                }
-
-                ProfileSectionCard(
-                    { },
-                    title = "Settings"
-                ) {
-
-                }
-                ProfileSectionCard(
-                    {
-                    },
-                    color = Color.Red,
-                    withLine = false,
-                    title = "Logout"
-                ) {
-                    showLogOutSheet = true
-                }
-
-            }
-
-
-            if (showLogOutSheet) {
-                CustomDialogSheet(
-                    title = AppStrings.log_out.stringValue,
-                    buttonText = AppStrings.log_out.stringValue,
-                    message = AppStrings.are_you_sure_you_want_log_out.stringValue,
-                    onAccept = {
-                        showLogOutSheet = false
-                        viewModel.setStateEvent(ProfileStateIntent.LogoutUser)
-                    },
-                    onReject = {
-                        showLogOutSheet = false
-                    })
-            }
-
-        }
-
-        when (logoutState?.value) {
-            true -> {
-                navigator?.popUntilRoot()
-            }
-            null -> {}
-            else -> {}
+        Navigator(screen = ProfileScreen()) { navigator ->
+            SlideTransition(navigator = navigator)
         }
     }
 

@@ -4,6 +4,8 @@ object Urls {
     const val BASE_URL = "https://api.escuelajs.co/api/v1/"
     const val LOGIN = "${BASE_URL}auth/login"
     const val REGISTER = "${BASE_URL}users"
+    const val GET_PROFILE_DATA = "${BASE_URL}auth/profile"
+    const val UPDATE_PROFILE = "${BASE_URL}users/"
     const val GET_ALL_PRODUCTS = "${BASE_URL}products"
     const val PRODUCT_DETAILS = "${BASE_URL}products"
     const val CATEGORIES = "${BASE_URL}categories"

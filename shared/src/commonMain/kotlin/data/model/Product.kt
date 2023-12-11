@@ -14,5 +14,6 @@ data class Product(
     val price: Float,
     val title: String,
     val updatedAt: String,
-    val rating: Rating?
+    val rate: Double? = 4.5,
+    val count: Int? = 49,
 ):BaseResponse()
