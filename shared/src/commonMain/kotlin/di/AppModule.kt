@@ -63,7 +63,7 @@ fun appModule(context: Context) = module {
     viewModelDefinition { RegisterViewModel(get()) }
     viewModelDefinition { MainViewModel(get()) }
     viewModelDefinition { SplashViewModel(get()) }
-    viewModelDefinition { ProfileViewModel(get()) }
+    viewModelDefinition { ProfileViewModel(get(),get()) }
     viewModelDefinition { CategoriesViewModel(get()) }
     viewModelDefinition { SelectedCategoryViewModel(get()) }
     viewModelDefinition { SearchViewModel(get()) }

@@ -79,6 +79,8 @@ class ProfileScreen : Screen {
         var showLogOutSheet by remember { mutableStateOf(false) }
         val logoutState = viewModel.logout.collectAsState()
 
+        val nameState = viewModel.userName.value
+        val emailState = viewModel.email.value
 
         Column(modifier = Modifier.padding(16.dp)) {
 
@@ -113,7 +115,7 @@ class ProfileScreen : Screen {
 
                 Column {
                     Text(
-                        text = "Mohamed Sakr",
+                        text = nameState?.text ?: "",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight(700),
@@ -124,7 +126,7 @@ class ProfileScreen : Screen {
                     Spacer(modifier = Modifier.height(5.dp))
 
                     Text(
-                        text = "sagr3272@gmail.com",
+                        text = emailState?.text ?: "",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight(600),
