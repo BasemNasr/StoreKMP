@@ -1,5 +1,6 @@
 # Store KMP 
 Compose Multiplatform app demo ( android,ios )
+![](app_preview.gif)
 
 🔍 Features Snapshot:
 - Login, Sign Up ✅
@@ -24,4 +25,4 @@ Compose Multiplatform app demo ( android,ios )
 
 
 
-![](app_preview.gif)
+
