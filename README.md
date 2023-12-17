@@ -1,5 +1,6 @@
 # Store KMP 
-Compose Multiplatform app demo ( android,ios )
+Compose Multiplatform Project ( android,ios )
+
 ![](app_preview.gif)
 
 🔍 Features Snapshot:
