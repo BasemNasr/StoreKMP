@@ -1,5 +1,5 @@
 # Store KMP 
-Compose Multiplatform Project ( android,ios )
+Compose Multiplatform Project ( android , ios )
 
 ![](app_preview.gif)
 
