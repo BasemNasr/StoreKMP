@@ -13,6 +13,7 @@ Compose Multiplatform Project ( android , ios )
 
 
 💻 Tech Stack Highlights:
+- Clean Archetecture with MVI 
 - Kotlin Multiplatform
 - Kotlin Coroutines
 - Compose Multiplatform
